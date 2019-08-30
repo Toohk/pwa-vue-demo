@@ -8,7 +8,7 @@ export default {
     /** Authentication */
 
     signUp({ commit }, signUpData){
-        axios.post('http://localhost:3000/api/user/signup', {
+        axios.post(process.env.VUE_APP_ROOT_API+':3000/api/user/signup', {
           'email': signUpData.email,
           'password': signUpData.password
             },{
@@ -20,7 +20,7 @@ export default {
     },
     doLogin({ commit }, loginData) {
         commit('loginStart');
-        axios.post('http://localhost:3000/api/user/login', {
+        axios.post(process.env.VUE_APP_ROOT_API+':3000/api/user/login', {
         ...loginData
         })
         .then(response => {
@@ -46,7 +46,7 @@ export default {
     fetchLibrary({ commit }) {
         if (localStorage.getItem('library') == "null"){
             console.log('fetch')
-            axios.get('http://localhost:3000/api/library/get',{
+            axios.get(process.env.VUE_APP_ROOT_API+':3000/api/library/get',{
             headers:{
                 'accessToken' : this.state.accessToken}})
              .then(response => {
@@ -58,7 +58,7 @@ export default {
     updateLibrary() {
         if (localStorage.getItem('library') !== "null"){
             console.log('update')
-            axios.put('http://localhost:3000/api/library/update',{
+            axios.put(process.env.VUE_APP_ROOT_API+':3000/api/library/update',{
                 
                 'library' : JSON.parse(localStorage.getItem('library'))})
              
