@@ -7,12 +7,24 @@
 </template>
 
 <script>
-
+import { mapActions } from 'vuex';
 
 export default {
   name: 'App',
   components: {
    
+  },
+   methods: {
+    ...mapActions([
+      'fetchAccessToken',
+      'fetchLibrary',
+      'updateLibrary'
+    ]),
+  },
+  created() {
+    this.fetchAccessToken();
+    this.fetchLibrary();
+    this.updateLibrary();
   },
   data: () => ({
     //
