@@ -64,6 +64,9 @@ export default {
              
         };
     },
+    updateStorage({commit}){
+        commit('updateLocalStorage');
+    },
 
 
 
@@ -123,8 +126,9 @@ export default {
         commit('updateBinder', binder);
     },
     deleteBinder({commit}, binder){
+        console.log(binder)
         const folder = this.state.targetFolder;
-        const index = folder.binders.indexOf(this.state.targetBinder);
+        const index = folder.binders.indexOf(binder);
         if (index > -1){
             folder.binders.splice(index,1)
         }
@@ -184,6 +188,12 @@ export default {
     clearData({commit}){
         commit('clear');
     },
+
+
+    keepTabs({commit}, dataTargetTabs){
+        commit('updateTargetTabs', dataTargetTabs)
+    },
+
     setDrawer({commit}){
         if(this.state.drawer == true){
             commit('updateDrawer', false);
@@ -191,4 +201,7 @@ export default {
             commit('updateDrawer', true);
         }
     },
+    setComponent({commit}, component){
+        commit('updateComponent', component)
+    }
 };

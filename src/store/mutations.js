@@ -14,10 +14,16 @@ export default {
     updateDrawer:(state, data) => {
       state.drawer = data
     },
+    updateComponent:(state, data) => {
+      state.component = data
+    },
     updateLibrary:(state, data) => {
       state.library = data;
       localStorage.setItem('library', JSON.stringify(state.library));
         //const fusion = Object.assign({}, state.library, data);
+    },
+    updateLocalStorage:(state) => {
+      localStorage.setItem('library', JSON.stringify(state.library));
     },
     updateBinder:(state, data) => {
       const binder=  state.library.folders.find(folder => folder == state.targetFolder)
@@ -34,12 +40,20 @@ export default {
     },
     updateTargetFolder:(state, dataTargetFolder) => {
       state.targetFolder = dataTargetFolder;
+      state.targetBinder = "";
+      state.targetTabs = "";
     },
     updateTargetBinder:(state, dataTargetBinder) => {
       state.targetBinder = dataTargetBinder;
+      state.targetTabs = "";
+    },
+    updateTargetTabs:(state, dataTargetTabs) => {
+      state.targetTabs = dataTargetTabs;
     },
     clear:(state) =>{
       state.targetFolder= '';
+      state.targetBinder= '';
+      state.targetTabs= '';
     },
   
   };

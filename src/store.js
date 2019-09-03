@@ -10,10 +10,15 @@ export default new Vuex.Store({
     accessToken: null,
     loggingIn: false,
     loginError: null,
+
     library:'',
+
     targetFolder: '',
     targetBinder: '',
+    targetTabs:'',
+    
     drawer: true,
+    component:'Folders'
   },
   
   mutations,

@@ -23,7 +23,7 @@
 
     <v-list dense nav>
 
-      <v-list-item link>
+      <v-list-item link @click="setComponent('Folders')">
         <v-list-item-icon>
           <v-icon>mdi-view-dashboard</v-icon>
         </v-list-item-icon>
@@ -75,7 +75,8 @@ export default{
     },
   methods: {
     ...mapActions([
-      'logout'
+      'logout',
+      'setComponent'
     ])
   }
 }

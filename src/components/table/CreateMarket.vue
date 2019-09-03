@@ -4,31 +4,33 @@
    
         <v-btn  v-on:click=" dialogCreate = true" text>
             
-            <v-icon color="green lighten-1">mdi-folder-plus-outline</v-icon>
-            <p class="text-none">Nouveau dossier</p>
+            <v-icon color="green lighten-1">mdi-file-outline</v-icon>
+            <p class="text-none">Ajouter un marché</p>
             
         </v-btn>
       
         <v-dialog v-model="dialogCreate" max-width="490">
             <v-card>
-                <v-toolbar dark color="orange">
+                <v-toolbar dark color="blue">
                     <v-toolbar-title>
-                        Ajouter un dossier
+                        Ajouter un marché
                     </v-toolbar-title>
                 </v-toolbar>
                 <v-container>
 
                     <v-form
                         lazy-validation
-                        @submit.prevent="createFolderSubmit"
+                        @submit.prevent="createMarketSubmit"
                     >
       
                         <v-text-field
                         v-model="name"
                         label="Nom"
                         required
-                        prepend-icon="mdi-folder"
+                        prepend-icon="mdi-book"
                         ></v-text-field>
+
+                      
 
                         <v-card-actions>
                             <v-spacer></v-spacer>
@@ -60,18 +62,20 @@ export default {
     data: () => {  
     return {
       dialogCreate: false,
-      name:"",
+
+        name:"",
+      
     }
   },
   methods: {
     ...mapActions([
-      'createFolder',
+      'createMarket',
     ]),
    
-    createFolderSubmit(){
-      this.createFolder(this.name)
+    createMarketSubmit(){
+      this.createMarket(this.name)
       .then(() => { 
-        this.dialogCreate = false,
+        this.dialogCreate = false;
         this.name='';
       })
     },
@@ -79,7 +83,6 @@ export default {
     
 }
 </script>
-
 <style scoped>
 .text-none{
     margin: 0px 0px 0px 10px;

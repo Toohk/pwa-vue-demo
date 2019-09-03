@@ -3,7 +3,8 @@
   <v-layout>
    
         <v-btn  v-on:click=" dialogDelete = true" text>
-           <v-icon color="red">mdi-delete</v-icon><p class="text-capitalize">Supprimer</p> 
+        
+            <v-icon color="red">mdi-delete</v-icon><p class="text-capitalize">Supprimer</p> 
         </v-btn>
       
         <v-dialog v-model="dialogDelete" max-width="490">
@@ -11,7 +12,7 @@
 
                 <v-toolbar dark color="error">
                     <v-toolbar-title>
-                        Supprimer {{ targetFolder.name }} ?
+                        Supprimer {{ binder.name }} ?
                     </v-toolbar-title>
                 </v-toolbar>
     
@@ -27,7 +28,7 @@
                         
                         <v-btn
                         color="error"
-                        @click="deleteFolderSubmit"
+                        @click="deleteBinderSubmit"
                         >
                         Supprimer
                         </v-btn>
@@ -43,8 +44,9 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapActions } from 'vuex';
 export default {
+    props:['binder'],
     data: () => {  
     return {
       dialogDelete: false,
@@ -52,21 +54,17 @@ export default {
     }
   },
  computed: {
-    ...mapState([
-      'targetFolder'
-    ])
+   
   },
   methods: {
     ...mapActions([
-      'clearData',
-      'deleteFolder',
+      'deleteBinder',
     ]),
     
    
-    deleteFolderSubmit(){
-      this.deleteFolder()
+    deleteBinderSubmit(){
+      this.deleteBinder(this.binder)
       .then(() => { 
-        this.clearData();
          this.dialogDelete= false;
       })
     },
@@ -74,7 +72,7 @@ export default {
 }
 </script>
 <style scoped>
-    .text-capitalize{
+.text-capitalize{
     margin: 0px 0px 0px 10px;
 }
 </style>

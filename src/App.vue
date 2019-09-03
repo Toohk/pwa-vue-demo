@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-content>
+    <v-content class="app-content">
       <router-view></router-view>
     </v-content>
   </v-app>
@@ -31,3 +31,8 @@ export default {
   }),
 };
 </script>
+<style>
+.app-content{
+  height: 100vh!important;
+}
+</style>

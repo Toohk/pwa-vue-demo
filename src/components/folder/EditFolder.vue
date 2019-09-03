@@ -1,7 +1,7 @@
 <template>
     <v-layout>
-        <v-btn  v-on:click=" dialogEdit = true" icon>
-            <v-icon color="orange">mdi-pencil</v-icon>
+        <v-btn  v-on:click=" dialogEdit = true" text>
+              <v-icon color="orange">mdi-pencil</v-icon> <p class="text-capitalize">Modifier</p> 
         </v-btn>
 
         <v-dialog v-model="dialogEdit" max-width="490">
@@ -91,3 +91,8 @@ export default {
   }
 }
 </script>
+<style scoped>
+    .text-capitalize{
+    margin: 0px 0px 0px 10px;
+}
+</style>

@@ -4,30 +4,37 @@
    
         <v-btn  v-on:click=" dialogCreate = true" text>
             
-            <v-icon color="green lighten-1">mdi-folder-plus-outline</v-icon>
-            <p class="text-none">Nouveau dossier</p>
+            <v-icon color="green lighten-1">mdi-notebook-outline</v-icon>
+            <p class="text-none">Nouveau Classeur</p>
             
         </v-btn>
       
         <v-dialog v-model="dialogCreate" max-width="490">
             <v-card>
-                <v-toolbar dark color="orange">
+                <v-toolbar dark color="blue">
                     <v-toolbar-title>
-                        Ajouter un dossier
+                        Ajouter un classeur
                     </v-toolbar-title>
                 </v-toolbar>
                 <v-container>
 
                     <v-form
                         lazy-validation
-                        @submit.prevent="createFolderSubmit"
+                        @submit.prevent="createBinderSubmit"
                     >
       
                         <v-text-field
-                        v-model="name"
+                        v-model="binder.name"
                         label="Nom"
                         required
-                        prepend-icon="mdi-folder"
+                        prepend-icon="mdi-book"
+                        ></v-text-field>
+
+                        <v-text-field
+                        v-model="binder.description"
+                        label="Description"
+                        required
+                        prepend-icon="mdi-tag"
                         ></v-text-field>
 
                         <v-card-actions>
@@ -60,26 +67,29 @@ export default {
     data: () => {  
     return {
       dialogCreate: false,
-      name:"",
+      binder:{
+        name:"",
+        description:""
+      }
     }
   },
   methods: {
     ...mapActions([
-      'createFolder',
+      'createBinder',
     ]),
    
-    createFolderSubmit(){
-      this.createFolder(this.name)
+    createBinderSubmit(){
+      this.createBinder(this.binder)
       .then(() => { 
-        this.dialogCreate = false,
-        this.name='';
+        this.dialogCreate = false;
+        this.binder.name='';
+        this.binder.description="";
       })
     },
   }
     
 }
 </script>
-
 <style scoped>
 .text-none{
     margin: 0px 0px 0px 10px;
