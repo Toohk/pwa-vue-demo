@@ -11,7 +11,7 @@ export default new Vuex.Store({
     loggingIn: false,
     loginError: null,
 
-    library:'',
+    chest:'',
 
     targetFolder: '',
     targetBinder: '',

@@ -2,9 +2,7 @@
   <v-app>
 
     <NavigationBar/>
-
     <NavigationDrawer/>
-
     <Content/>
    
   </v-app>

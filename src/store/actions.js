@@ -8,19 +8,18 @@ export default {
     /** Authentication */
 
     signUp({ commit }, signUpData){
-        axios.post(process.env.VUE_APP_ROOT_API+':3000/api/user/signup', {
+        axios.post(process.env.VUE_APP_ROOT_API+'/user/signup',{
+            headers: {'Content-Type': 'application/json'}
+        },{
           'email': signUpData.email,
           'password': signUpData.password
-            },{
-            headers: {'Content-Type': 'application/json'}
         }).then(() => { 
                 router.push("/login");
             }); 
-        
     },
     doLogin({ commit }, loginData) {
         commit('loginStart');
-        axios.post(process.env.VUE_APP_ROOT_API+':3000/api/user/login', {
+        axios.post(process.env.VUE_APP_ROOT_API+'/user/login', {
         ...loginData
         })
         .then(response => {
@@ -39,29 +38,34 @@ export default {
     },
     logout({ commit }) {
         localStorage.removeItem('accessToken');
-        localStorage.removeItem('library');
+        localStorage.removeItem('chest');
         commit('logout');
         router.push('/login');
     },
-    fetchLibrary({ commit }) {
-        if (localStorage.getItem('library') == "null"){
+
+
+    
+    /** Save */
+    
+    fetchChest({ commit }) {
+        if (localStorage.getItem('chest') == "null"){
             console.log('fetch')
-            axios.get(process.env.VUE_APP_ROOT_API+':3000/api/library/get',{
+            axios.get(process.env.VUE_APP_ROOT_API+'/chest/get',{
             headers:{
                 'accessToken' : this.state.accessToken}})
              .then(response => {
-                 commit('updateLibrary',response.data.library[0]);
+                 console.log(response.data.chest[0])
+                 commit('updateChest',response.data.chest[0]);
             })
         }else{ 
-        commit('updateLibrary', JSON.parse(localStorage.getItem('library')));}
+        commit('updateChest', JSON.parse(localStorage.getItem('chest')));}
     },
-    updateLibrary() {
-        if (localStorage.getItem('library') !== "null"){
-            console.log('update')
-            axios.put(process.env.VUE_APP_ROOT_API+':3000/api/library/update',{
-                
-                'library' : JSON.parse(localStorage.getItem('library'))})
-             
+    saveChest() {
+        if (localStorage.getItem('chest') !== "null"){
+            console.log('save')
+            axios.put(process.env.VUE_APP_ROOT_API+'/chest/update',{
+                'chest' : JSON.parse(localStorage.getItem('chest'))
+            })
         };
     },
     updateStorage({commit}){
@@ -74,9 +78,17 @@ export default {
     /** Folder */
 
     createFolder({commit}, submitFolder){
-        const library = this.state.library;
-        library.folders.push({"name":submitFolder, "binders":[]});
-        commit('updateLibrary', library);
+        const chest = this.state.chest;
+        console.log("folders" in chest.stock)
+        
+        if("folders" in chest.stock === true){
+            chest.stock.push({"folders":[]});
+            console.log(chest.stock)
+        }
+        
+
+       // {"name":submitFolder, "binders":[]}
+        commit('updateChest', chest);
     },
     editFolder({commit}, editedName){
         const library = this.state.library;

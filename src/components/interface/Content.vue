@@ -3,11 +3,13 @@
       <v-content class="block-content">
       
         <v-card outlined class="sub-nav">
-        <v-btn @click="clearData(), setComponent('Folders')" color="grey" text> <v-icon class="icon-nav">mdi-home</v-icon> Index </v-btn>
-            <v-btn @click="setComponent('Folders'), keepFolder(targetFolder)" v-if="targetFolder !== ''" color="orange" text> <v-icon class="icon-nav">mdi-folder</v-icon> {{targetFolder.name}} </v-btn>  
-            <v-btn @click="setComponent('Tables'), keepBinder(targetBinder)" v-if="targetBinder !== ''" color="blue" text> <v-icon class="icon-nav">mdi-notebook</v-icon> {{targetBinder.name}}</v-btn>
-           <v-btn  @click="setComponent('Tabs'),keepTabs(targetTab)" v-if="targetTabs !== ''" color="green" text> <v-icon class="icon-nav">mdi-file</v-icon> {{targetTabs[0].market_id.name}}</v-btn>
-
+        <p class="text-center">
+        
+            <v-chip outlined class="text-capitalize" @click="clearData(), setComponent('Folders')" color="grey" text> <v-icon class="icon-nav">mdi-home</v-icon> Index </v-chip>
+            <v-chip outlined class="text-capitalize" @click="setComponent('Folders'), keepFolder(targetFolder)" v-if="targetFolder !== ''" color="orange" text> <v-icon class="icon-nav">mdi-folder</v-icon> {{targetFolder.name}} </v-chip>  
+            <v-chip outlined class="text-capitalize" @click="setComponent('Tables'), keepBinder(targetBinder)" v-if="targetBinder !== ''" color="blue" text> <v-icon class="icon-nav">mdi-notebook</v-icon> {{targetBinder.name}}</v-chip>
+           <v-chip  outlined class="text-capitalize" @click="setComponent('Tabs'),keepTabs(targetTab)" v-if="targetTabs !== ''" color="green" text> <v-icon class="icon-nav">mdi-file</v-icon> {{targetTabs[0].market_id.name}}</v-chip>
+        </p>
         </v-card>
         
         <v-container>
@@ -72,5 +74,8 @@ methods: {
     }
     .icon-nav{
         margin-right: 10px;
+    }
+    .container{
+        padding: 12px;
     }
 </style>

@@ -17,14 +17,14 @@ export default {
    methods: {
     ...mapActions([
       'fetchAccessToken',
-      'fetchLibrary',
-      'updateLibrary'
+      'fetchChest',
+      'saveChest'
     ]),
   },
   created() {
     this.fetchAccessToken();
-    this.fetchLibrary();
-    this.updateLibrary();
+    this.fetchChest();
+    this.saveChest();
   },
   data: () => ({
     //
