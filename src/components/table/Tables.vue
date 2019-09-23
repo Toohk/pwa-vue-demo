@@ -1,23 +1,34 @@
 <template>
 <div>
-<CreateMarket/>
-    <listMarket/>
+
+    <br>
+
+    <v-card outlined v-show="minInterface == false">
+
     
+    <CreateMarket/>
+    <v-divider>
+    </v-divider>
+    <div class="d-flex grey lighten-3 flex-wrap">
+        <span v-for="(market, i) in targetBinder.markets" v-bind:key="i"> 
+        <listMarket v-bind:market_name="targetBinder.tables.forecast.tabs[i].market_id.name" v-bind:achieve="targetBinder.tables.achieve.tabs[i]" v-bind:forecast="targetBinder.tables.forecast.tabs[i]"/>
+        </span>
+    </div>
+    </v-card>
+
+    <br>
+
 <div v-if="targetBinder.markets.length>1">
 
 <Synthese/>
 </div>
+    <div class="d-flex flex-row flex-wrap">
 
+        <span v-for="(market, i) in targetBinder.markets" v-bind:key="i">  
+            <Graph v-bind:achieve="targetBinder.tables.achieve.tabs[i]" v-bind:forecast="targetBinder.tables.forecast.tabs[i]" />    
+        </span>
 
-
-
-<div class="d-flex flex-column-reverse flex-wrap">
-
-    <div v-for="(market, i) in targetBinder.markets" v-bind:key="i">  
-        <Graph v-bind:achieve="targetBinder.tables.quantitative_sales.achieve.tabs[i]" v-bind:forecast="targetBinder.tables.quantitative_sales.forecast.tabs[i]" />    
     </div>
-
-</div>
 </div>
 </template>
 
@@ -39,7 +50,8 @@ export default {
     },
     computed: {
         ...mapState([
-            'targetBinder'
+            'targetBinder',
+            'minInterface'
         ])
     },
 }

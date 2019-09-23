@@ -34,5 +34,6 @@ export default {
 <style>
 .app-content{
   height: 100vh!important;
+
 }
 </style>

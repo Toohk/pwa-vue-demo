@@ -17,6 +17,14 @@ export default {
     updateComponent:(state, data) => {
       state.component = data
     },
+    updateInterface:(state) => {
+      if (state.minInterface === true){
+        state.minInterface = false
+      } else{
+        state.minInterface = true
+      }
+      
+    },
     updateChest:(state, data) => {
       state.chest = data;
       localStorage.setItem('chest', JSON.stringify(state.chest));

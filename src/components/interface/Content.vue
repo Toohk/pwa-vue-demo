@@ -1,17 +1,22 @@
 <template>
   
       <v-content class="block-content">
-      
-        <v-card outlined class="sub-nav">
-        <p class="text-center">
+ 
+        <v-card  v-show="minInterface == false" outlined class="sub-nav">
         
-            <v-chip outlined class="text-capitalize" @click="clearData(), setComponent('Folders')" color="grey" text> <v-icon class="icon-nav">mdi-home</v-icon> Index </v-chip>
-            <v-chip outlined class="text-capitalize" @click="setComponent('Folders'), keepFolder(targetFolder)" v-if="targetFolder !== ''" color="orange" text> <v-icon class="icon-nav">mdi-folder</v-icon> {{targetFolder.name}} </v-chip>  
-            <v-chip outlined class="text-capitalize" @click="setComponent('Tables'), keepBinder(targetBinder)" v-if="targetBinder !== ''" color="blue" text> <v-icon class="icon-nav">mdi-notebook</v-icon> {{targetBinder.name}}</v-chip>
-           <v-chip  outlined class="text-capitalize" @click="setComponent('Tabs'),keepTabs(targetTab)" v-if="targetTabs !== ''" color="green" text> <v-icon class="icon-nav">mdi-file</v-icon> {{targetTabs[0].market_id.name}}</v-chip>
+        <p class="nav-line">
+        
+            
+            <v-btn  class="ma-1" outlined small fab color="grey darken-2" @click="clearData(), setComponent('Folders')">
+                <v-icon>mdi-home</v-icon>
+            </v-btn>
+            <v-chip  outlined class="text-capitalize ma-1" @click="setComponent('Folders'), keepFolder(targetFolder)" v-if="targetFolder !== ''" color="orange" text> <v-icon class="icon-nav">mdi-folder</v-icon> {{targetFolder.name}} </v-chip>  
+            <v-chip outlined class="text-capitalize ma-1" @click="setComponent('Tables'), keepBinder(targetBinder)" v-if="targetBinder !== ''" color="blue" text> <v-icon class="icon-nav">mdi-notebook</v-icon> {{targetBinder.name}}</v-chip>
+           <v-chip  outlined class="text-capitalize ma-1" @click="setComponent('Tabs'),keepTabs(targetTab)" v-if="targetTabs !== ''" color="green" text> <v-icon class="icon-nav">mdi-file-chart</v-icon> {{targetTabs[0].market_id.name}}</v-chip>
         </p>
+ 
         </v-card>
-        
+   
         <v-container>
 
         <Folders v-if="component === 'Folders'"/>
@@ -37,7 +42,8 @@ export default {
       'component',
       'targetFolder',
       'targetBinder',
-      'targetTabs'
+      'targetTabs',
+      'minInterface'
     ]),
     },
     components:{
@@ -47,30 +53,30 @@ export default {
     },
    data() {
        return {
-          ...mapActions([
-              'setComponent',
-              'keepFolder',
-              'keepBinder',
-              'keepTabs',
-              'clearData'
-          ])
+        ...mapActions([
+            'setComponent',
+            'keepFolder',
+            'keepBinder',
+            'keepTabs',
+            'clearData'
+        ])
        }
    },
 
-methods: {
-    
-}
+
 }
 
 </script>
 
 <style>
-   main .v-content{
+    main .v-content{
         padding: 0px !important;
     }
     .sub-nav{
-       
-        height: 60px;
+        min-height: 60px;
+    }
+    .nav-line{
+        margin: 10px 0px 5px 0px!important;
     }
     .icon-nav{
         margin-right: 10px;

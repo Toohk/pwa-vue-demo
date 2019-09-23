@@ -1,8 +1,8 @@
 <template>
     <v-app-bar
-      color="#fcb69f"
       dark
-      src="https://picsum.photos/1920/1080?random"
+      color="grey darken-2"
+     
       scrolling-techniques-2
      
     >
@@ -36,5 +36,6 @@ export default {
   
   .v-application--wrap{
     min-height: 20px!important;
+    background-color: rgba(255, 0, 0, 0)
   }
 </style>

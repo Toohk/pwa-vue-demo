@@ -77,6 +77,7 @@ export default {
     ]),
    
     editFolderSubmit(){ 
+     this.dialogEdit= false
       this.editFolder(this.folder)
       
       .then(() => { 

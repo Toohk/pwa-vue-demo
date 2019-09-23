@@ -1,52 +1,42 @@
 <template>
-    <div class="d-flex  flex-wrap">
-        {{value}}
-        <v-card outlined class="market-card" v-for="market in targetBinder.markets" v-bind:key="market">
-            
-            <div class="text-center">{{market.name}}</div>
-            
-            <v-divider></v-divider>
-
-            <v-sheet color="blue">
-                <v-sparkline
-                    :labels="labels"
-                    :value="value"
-                    color="white"
-                    line-width="6"
-                    padding="16"
-                ></v-sparkline>
-            </v-sheet>
-
-        </v-card>
+   
         
-    </div>
+        
+            <v-card link outlined class="market-card" @click="keepTabs([forecast, achieve]), setComponent('Tabs')" >
+                
+                <div class="text-center"><v-icon  class="m-2" large color="green">mdi-file-chart</v-icon>{{market_name}}</div>
+                
+            </v-card>
+    
+        
+   
 </template>
 
 <script>
-import {mapState } from 'vuex';
+import {mapState, mapActions} from 'vuex';
 export default {
     computed:{
         ...mapState([
             'targetBinder'
         ]),
-        value(){
-            const volume = [3,20,10,34,12,]
-            
-            
-            return volume
-        }
     },
-    props:[ ],
+    methods:{
+        ...mapActions([
+            'keepTabs',
+            'setComponent'
+        ]),
+    },
+    props:['forecast', 'achieve', 'market_name' ],
    
     
 }
 </script>
 <style>
 .market-card{
-    width: 200px;
-    height: 100px;
+    padding: 10px;
+    height: 50px;
     margin: 10px;
-    border-color: rgb(78, 196, 78)!important;
+    border-color: rgb(120, 228, 120)!important;
 }
     
 </style>

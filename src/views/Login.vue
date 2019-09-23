@@ -2,17 +2,21 @@
 
   <v-layout align-center justify-center row fill-height>
     <v-flex xs10 sm6 md4>
-      <v-card>
+      <v-card outlined>
+        <div>
+        <v-img 
+      max-height="250" aspect-ratio="1" src="../assets/logo.png">
 
-        <v-toolbar dark color="primary">
-          <v-toolbar-title>
-            Se connecter
-          </v-toolbar-title>
-        </v-toolbar>
+     
+      </v-img>
+    </div>
+    <p class="title ma-4">Se connecter</p>
+    <v-divider></v-divider>
     
         <v-container>
 
           <v-form
+          
             ref="form"
             lazy-validation
             @submit.prevent="loginSubmit"
@@ -35,6 +39,7 @@
             <v-card-actions>
               <div class="flex-grow-1"></div>
               <v-btn
+              outlined
                 color="success"
                 type="submit"
               >
@@ -48,7 +53,7 @@
       </v-card>
 
       <router-link to="/signup">
-        <v-btn color="warning">S'inscrire</v-btn>
+        <v-btn outlined class="ma-4" color="warning">S'inscrire</v-btn>
       </router-link>
 
     </v-flex>

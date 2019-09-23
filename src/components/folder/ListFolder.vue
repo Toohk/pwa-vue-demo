@@ -6,7 +6,7 @@
 
             <v-expansion-panels  popout>
                 <v-flex row wrap >
-                <v-expansion-panel class="test"  v-for="folder in library.folders" v-bind:key="folder.name"  >
+                <v-expansion-panel class="test"  v-for="folder in chest.stock.folders" v-bind:key="folder.name"  >
                     
                     <v-expansion-panel-header v-slot="{ open }" class="header-folder" @click="target(folder)" >
            
@@ -55,7 +55,7 @@ export default {
     },
     computed:{
         ...mapState([
-      'library',
+      'chest',
     ]),
     },
     methods:{

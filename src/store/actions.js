@@ -8,11 +8,12 @@ export default {
     /** Authentication */
 
     signUp({ commit }, signUpData){
+        console.log(signUpData.email)
         axios.post(process.env.VUE_APP_ROOT_API+'/user/signup',{
-            headers: {'Content-Type': 'application/json'}
-        },{
           'email': signUpData.email,
           'password': signUpData.password
+        },{
+            headers: {'Content-Type': 'application/json'}
         }).then(() => { 
                 router.push("/login");
             }); 
@@ -54,8 +55,20 @@ export default {
             headers:{
                 'accessToken' : this.state.accessToken}})
              .then(response => {
-                 console.log(response.data.chest[0])
-                 commit('updateChest',response.data.chest[0]);
+                 const chest = response.data.chest[0]
+                
+                 if(chest.stock.folders === undefined){
+                    chest.stock = { 
+                        "folders": [], 
+                        "parameters":{
+                            "defaultChart":"line",
+                            "defaultColorChart":"palette1",
+                            "defaultSynthese":"line",
+                            "defaultColorSynthese":"palette1"
+                        }
+                    }
+                 }
+                 commit('updateChest',chest);
             })
         }else{ 
         commit('updateChest', JSON.parse(localStorage.getItem('chest')));}
@@ -79,31 +92,25 @@ export default {
 
     createFolder({commit}, submitFolder){
         const chest = this.state.chest;
-        console.log("folders" in chest.stock)
-        
-        if("folders" in chest.stock === true){
-            chest.stock.push({"folders":[]});
-            console.log(chest.stock)
-        }
-        
-
-       // {"name":submitFolder, "binders":[]}
+        chest.stock.folders.push({"name":submitFolder, "binders":[]});
         commit('updateChest', chest);
     },
+
     editFolder({commit}, editedName){
-        const library = this.state.library;
-        library.folders.find(folder => folder == this.state.targetFolder).name = editedName;
-        commit('updateLibrary', library);
+        const chest = this.state.chest;
+        chest.stock.folders.find(folder => folder == this.state.targetFolder).name = editedName;
+        commit('updateChest', chest);
     },
     deleteFolder({commit}){
-        const library = this.state.library;
-        const index = library.folders.indexOf(this.state.targetFolder);
+        const chest = this.state.chest;
+        const index = chest.stock.folders.indexOf(this.state.targetFolder);
         if (index > -1){
-            library.folders.splice(index,1)
+            chest.stock.folders.splice(index,1)
         }
-        commit('updateLibrary', library);
+        commit('updateChest', chest);
     },
     keepFolder({commit}, dataTargetFolder){
+        console.log(dataTargetFolder)
         commit('updateTargetFolder', dataTargetFolder);
     },
 
@@ -111,24 +118,24 @@ export default {
     /** Binder */
     
     createBinder({commit}, submitBinder){
-        const library = this.state.library;
-        library.folders.find(folder => folder == this.state.targetFolder)
+        const chest = this.state.chest;
+        chest.stock.folders.find(folder => folder == this.state.targetFolder)
             .binders.push({
                 "name": submitBinder.name,
                 "description": submitBinder.description,
+                "synthese": chest.stock.parameters.defaultSynthese,
+                "colors": chest.stock.parameters.defaultColorSynthese,
                 "markets": [],
                 "tables": {
-                    "quantitative_sales":{
-                        "forecast":{
-                            "tabs":[]
-                        },
-                        "achieve":{
-                            "tabs":[]
-                        }
+                    "forecast":{
+                        "tabs":[]
+                    },
+                    "achieve":{
+                        "tabs":[]
                     }
                 }
             })
-        commit('updateLibrary', library);
+        commit('updateChest', chest);
     },
     editBinder({commit}, editedBinder){
         const binder = this.state.targetFolder.binders
@@ -164,14 +171,18 @@ export default {
         for (let a = 0; a < 12; a++){
             lines.push({"volume": null,"price": null})
         }
-        binder.tables.quantitative_sales.forecast.tabs.push(
-            {"market_id":market, "lines":lines});
+        binder.tables.forecast.tabs.push({
+            "market_id":market,
+            "chart":this.state.chest.stock.parameters.defaultChart,
+            "colors":this.state.chest.stock.parameters.defaultColorChart,
+            "lines":lines
+        });
         const lines2 = []
         let b;
         for (let b = 0; b < 12; b++){
             lines2.push({"volume": null,"price": null})
         }
-        binder.tables.quantitative_sales.achieve.tabs.push(
+        binder.tables.achieve.tabs.push(
             {"market_id":market, "lines":lines2});
         commit('updateBinder', binder);
     },
@@ -185,15 +196,15 @@ export default {
         if (index > -1){
             binder.markets.splice(index,1)
         }
-        const forecast_tabs = binder.tables.quantitative_sales.forecast.tabs.find( tab => tab.market_id === market);
-        const index2 = binder.tables.quantitative_sales.forecast.tabs.indexOf(forecast_tabs);
+        const forecast_tabs = binder.tables.forecast.tabs.find( tab => tab.market_id === market);
+        const index2 = binder.tables.forecast.tabs.indexOf(forecast_tabs);
         if (index2 > -1){
-            binder.tables.quantitative_sales.forecast.tabs.splice(index2,1)
+            binder.tables.forecast.tabs.splice(index2,1)
         }
-        const achieve_tabs = binder.tables.quantitative_sales.achieve.tabs.find( tab => tab.market_id === market);
-        const index3 = binder.tables.quantitative_sales.achieve.tabs.indexOf(achieve_tabs);
+        const achieve_tabs = binder.tables.achieve.tabs.find( tab => tab.market_id === market);
+        const index3 = binder.tables.achieve.tabs.indexOf(achieve_tabs);
         if (index3 > -1){
-            binder.tables.quantitative_sales.achieve.tabs.splice(index3,1)
+            binder.tables.achieve.tabs.splice(index3,1)
         }
         commit('updateBinder', binder);
     },
@@ -215,5 +226,8 @@ export default {
     },
     setComponent({commit}, component){
         commit('updateComponent', component)
+    },
+    setInterface({commit}){
+        commit('updateInterface')
     }
 };

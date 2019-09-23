@@ -4,7 +4,7 @@
    
         <v-btn  v-on:click=" dialogCreate = true" text>
             
-            <v-icon color="green lighten-1">mdi-file-outline</v-icon>
+            <v-icon color="green lighten-1">mdi-file-chart-outline</v-icon>
             <p class="text-none">Ajouter un marché</p>
             
         </v-btn>

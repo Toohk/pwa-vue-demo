@@ -1,16 +1,20 @@
 <template>
-  <div class="app">
-    <br>
+ 
     <v-card light class="card-graph" outlined>
+      
 
-      <div class="text-center headline title-graph">Synthèse globale</div>
+      <EditSynthese v-bind:forecast="forecast" v-bind:achieve="achieve"/>
+      
+      <v-toolbar dark color="red lighten-1">
+        <div class="text-center headline title-graph">Synthèse globale</div>
+      </v-toolbar>
           
       <v-divider></v-divider>
       
       <div class="d-inline-flex justify-xl-space-around content-synth  pa-2 flex-wrap">
         <div class="block-graph">
           <div class="graph">   
-            <apexcharts type="area" :options="chartOptions" :series="series"></apexcharts>
+            <apexcharts :type="targetBinder.synthese" :options="chartOptions" :series="series"></apexcharts>
           </div>
           <div class="total text-center headline">
             <v-divider></v-divider>
@@ -27,7 +31,7 @@
         </div>
         <div class="block-list">
           <div class="list-graph">
-            <v-simple-table >
+            <v-simple-table>
               <thead>
                   <tr>
                     <th class="text-left">Mois</th>
@@ -59,32 +63,23 @@
                     
     </v-card>
 
-    <v-divider></v-divider>
-
-  </div>
-
 </template>
 
 <script>
 
 import VueApexCharts from 'vue-apexcharts';
+import EditSynthese from './EditSynthese';
 import { mapState} from 'vuex';
 
 export default {
   name: 'Chart',
   components: {
     apexcharts: VueApexCharts,
+    EditSynthese,
   },
   data: function() {
       return {
-        chartOptions: {
-          chart: {
-            id: 'vuechart-example',
-          },
-          xaxis: {
-            categories: ['jan', 'fév', 'mar', 'avr', 'mai', 'juin', 'juil', 'aou','sep','oct','nov','déc'],
-          },
-        },
+        
         series: [{
           name: 'Prévision',
           data: []
@@ -131,9 +126,21 @@ export default {
     computed: {
         ...mapState([
             'targetBinder',
+            'minInterface'
         ]),
+        chartOptions() {
+        const option = {
+          theme:{
+            palette: this.targetBinder.colors
+          },
+          xaxis: {
+            categories: ['jan', 'fév', 'mar', 'avr', 'mai', 'juin', 'juil', 'aou','sep','oct','nov','déc'],
+          },
+        }
+        return option
+      },
         achieve(){
-            const tabs = this.targetBinder.tables.quantitative_sales.achieve.tabs
+            const tabs = this.targetBinder.tables.achieve.tabs
             const result = [0,0,0,0,0,0,0,0,0,0,0,0];
             for (let i=0; i<tabs.length; i++){
                 for (let x=0; x<tabs[i].lines.length; x++){
@@ -143,7 +150,7 @@ export default {
             return result
         },
         forecast(){
-            const tabs = this.targetBinder.tables.quantitative_sales.forecast.tabs
+            const tabs = this.targetBinder.tables.forecast.tabs
             const result = [0,0,0,0,0,0,0,0,0,0,0,0];
             for (let i=0; i<tabs.length; i++){
                 for (let x=0; x<tabs[i].lines.length; x++){
@@ -181,7 +188,7 @@ export default {
 <style scoped>
 
 .card-graph{
-  padding-top: 8px;
+ 
   margin-bottom: 20px;
 }
 .graph{

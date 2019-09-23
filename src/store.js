@@ -18,7 +18,10 @@ export default new Vuex.Store({
     targetTabs:'',
     
     drawer: true,
-    component:'Folders'
+    component:'Folders',
+    minInterface:false,
+
+    
   },
   
   mutations,
